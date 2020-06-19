@@ -1,0 +1,8 @@
+body,
+html{
+    height:100vh;
+}
+.col-3{
+    background-color: #eee;
+    height:100vh;
+}
