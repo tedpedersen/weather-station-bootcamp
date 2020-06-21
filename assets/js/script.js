@@ -12,6 +12,8 @@ var getWeather = function(cityname) {
     // console.log(data2);
     //refs api
     var now = moment();
+    var todaylat = data2.coord.lat;
+    var todaylong = data2.coord.lon;
     var nowis = now.format("MMM, DD, YYYY");
     var city = data2.name;
     var cond = data2.weather[0].description;
@@ -21,6 +23,8 @@ var getWeather = function(cityname) {
     var hum = data2.main.humidity;
     var wind = data2.wind.speed;
     var uv = "";
+
+    console.log("long" + todaylong + "lat" + todaylat);
 
     var todayCard = `<div class="card animated fadeIn">
       <div class="card-body" id="maincard">
@@ -183,7 +187,7 @@ function checkCity(cityname){
   fetch(apiUrl).then(function(response) {
     if (response.status === 404) {
       response.json().then(function(object) {
-        alert("Please enter a valid city!")
+        alert("Please enter only a valid city by name!")
       })
     } else if (response.status === 200) {
       response.json().then(function(object) {
@@ -246,4 +250,7 @@ $(".list-group-item").click(function() {
   getWeather(cityname);
 });
 
+
+var myDate = new Date(1498132800);
+console.log(myDate);
 
