@@ -42,7 +42,7 @@ var getWeather = function(cityname) {
   fetch(apiUrl).then(function(response) {
     response.json().then(function(data) {
       if(cityname){
-      // console.log(data);
+      console.log(data);
       // clear the input
       nameInputEl.value = "";
       // refs to api
@@ -168,56 +168,75 @@ event.preventDefault();
 // get value from input element
 var cityname = nameInputEl.value.trim();
 if (cityname) {
-  addToStorage(cityname);
-  function addToStorage(cityname) {
-      //Grab our itemsline string from localStorage.
-      var stringFromLocalStorage = window.localStorage.getItem("itemsline");
+  checkCity(cityname);
 
-      //Then parse that string into an actual value.
-      var parsedValueFromString = JSON.parse(stringFromLocalStorage);
-
-      //If that value is null (meaning that we've never saved anything to that spot in localStorage before), use an empty array as our array. Otherwise, just stick with the value we've just parsed out.
-      var array = parsedValueFromString || [];
-
-      //Here's the value we want to add
-      var value = cityname;
-
-      //If our parsed/empty array doesn't already have this value in it...
-      if(array.indexOf(value) == -1){
-          //add the value to the array
-          array.push(value);
-
-          //turn the array WITH THE NEW VALUE IN IT into a string to prepare it to be stored in localStorage
-          var stringRepresentingArray = JSON.stringify(array);
-
-          //and store it in localStorage as "itemsline"
-          window.localStorage.setItem("itemsline", stringRepresentingArray);
-      
-          //build history button
-          buildHistory();
-      }
   }     
-}
+
   //validate the input
   else {
   alert("Please enter a valid city name.");
   }
 };
 
-function buildHistory(){
+function checkCity(cityname){
+  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+  fetch(apiUrl).then(function(response) {
+    if (response.status === 404) {
+      response.json().then(function(object) {
+        alert("Please enter a valid city!")
+      })
+    } else if (response.status === 200) {
+      response.json().then(function(object) {
+        addToStorage(cityname);
+        //build history button
+        buildHistory(cityname);
+        //show the card
+        getWeather(cityname);
+      })
+    }
+  })
+}
+
+function buildHistory(cityname){
+  var stringFromLocalStorage = window.localStorage.getItem("itemsline");
+
+  //Then parse that string into an actual value.
+  var parsedValueFromString = JSON.parse(stringFromLocalStorage);
+  $("#historyList").html("");
+  $(parsedValueFromString).each(function() {
+    console.log(this);
+    var searchHistory = `<li class="list-group-item upper">${this}</li>`;
+    $("#historyList").prepend(searchHistory);
+  });
+
+}
+
+function addToStorage(cityname) {
+  //Grab our itemsline string from localStorage.
   var stringFromLocalStorage = window.localStorage.getItem("itemsline");
 
   //Then parse that string into an actual value.
   var parsedValueFromString = JSON.parse(stringFromLocalStorage);
 
-  $(parsedValueFromString).each(function() {
-    console.log(this);
-    var searchHistory = `<li class="list-group-item upper">${this}</li>`;
-    $("#historyList").append(searchHistory);
-  });
+  //If that value is null (meaning that we've never saved anything to that spot in localStorage before), use an empty array as our array. Otherwise, just stick with the value we've just parsed out.
+  var array = parsedValueFromString || [];
 
-}
+  //Here's the value we want to add
+  var value = cityname;
 
+  //If our parsed/empty array doesn't already have this value in it...
+  if(array.indexOf(value) == -1){
+      //add the value to the array
+      array.push(value);
+
+      //turn the array WITH THE NEW VALUE IN IT into a string to prepare it to be stored in localStorage
+      var stringRepresentingArray = JSON.stringify(array);
+
+      //and store it in localStorage as "itemsline"
+      window.localStorage.setItem("itemsline", stringRepresentingArray);
+      checkCity(cityname);
+  }
+};
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 buildHistory();

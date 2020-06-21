@@ -48,10 +48,6 @@ h6{
 #fiveday .upper{
     font-size: 10px;
 }
-button{
-    -moz-appearance: none;
--webkit-appearance: none;
-}
 li{
     cursor: pointer;
 }
@@ -74,7 +70,7 @@ li{
     color:#00b4ff;
 }
   /* KEYFRAMES */
-/*   
+   
   @-webkit-keyframes animateCloud {
       0% {
           margin-left: -1000px;
@@ -100,7 +96,7 @@ li{
       100% {
           margin-left: 100%;
       }
-  } */
+  }  
   
   /* ANIMATIONS */
   
