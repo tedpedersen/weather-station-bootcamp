@@ -22,9 +22,10 @@ var getWeather = function(cityname) {
     var icon = "http://openweathermap.org/img/w/" + theiconcode + ".png";
     var hum = data2.main.humidity;
     var wind = data2.wind.speed;
-    var uv = "";
+    var uv = "30";
 
-    console.log("long" + todaylong + "lat" + todaylat);
+
+    console.log("long: " + todaylong + "lat: " + todaylat);
 
     var todayCard = `<div class="card animated fadeIn">
       <div class="card-body" id="maincard">
@@ -32,16 +33,25 @@ var getWeather = function(cityname) {
         <p>Temp: <span>${temp}</span> F&deg;</p>
         <p>Humidity: <span>${hum}</span>%</p>
         <p>Wind Speed: <span>${wind}</span> MPH</p>
-        <p>UV Index: <span>${uv}</span></p>
+        <p>UV Index: <span class="badge" id="uv">${uv}</span></p>
       </div>
     </div>
     <h4>5 Day Forcast for ${city}</h4>`
     $("#main").html("");
-    $("#main").append(todayCard); 
+    $("#main").append(todayCard);
+    if (uv < 3) {
+      $( "#uv" ).addClass( "badge-success" );
+    }
+    else if (uv < 7) {
+      $( "#uv" ).addClass( "badge-warning" );
+
+    }
+    else {
+      $( "#uv" ).addClass( "badge-danger" );
+
+    } 
     });
   });
-
-  
   //5 day request
   fetch(apiUrl).then(function(response) {
     response.json().then(function(data) {
