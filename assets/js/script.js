@@ -155,41 +155,47 @@ var getWeather = function(cityname) {
       </div>
       `;
     $("#five").html("");
-    // $(card).insertAfter("#five");
     $("#five").append(card);
-    $(".list-group-item").click(function() {
-      cityname = $(this).text();
-      getWeather(cityname);
-      });
-      }  else{
-      alert("Please enter a valid city name.");
+  
       }
-
     });
   });
 };
+
 
 var formSubmitHandler = function(event) {
 event.preventDefault();
 // get value from input element
 var cityname = nameInputEl.value.trim();
 if (cityname) {
-  addToCart(cityname);
-  function addToCart(cityname) {
-    // check local storage and add city if doesnt exist
-    if (localStorage) {
-        var cart;
-        if (!localStorage['cart']) cart = [];
-        else cart = JSON.parse(localStorage['cart']);            
-        if (!(cart instanceof Array)) cart = [];
-        cart.push(cityname);
-        //create search history buttons
-        var searchHistory = `<li class="list-group-item upper">${cityname}</li>`;
-        $("#historyList").append(searchHistory);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        //build the cards
-        getWeather(cityname);
-    } 
+  addToStorage(cityname);
+  function addToStorage(cityname) {
+      //Grab our itemsline string from localStorage.
+      var stringFromLocalStorage = window.localStorage.getItem("itemsline");
+
+      //Then parse that string into an actual value.
+      var parsedValueFromString = JSON.parse(stringFromLocalStorage);
+
+      //If that value is null (meaning that we've never saved anything to that spot in localStorage before), use an empty array as our array. Otherwise, just stick with the value we've just parsed out.
+      var array = parsedValueFromString || [];
+
+      //Here's the value we want to add
+      var value = cityname;
+
+      //If our parsed/empty array doesn't already have this value in it...
+      if(array.indexOf(value) == -1){
+          //add the value to the array
+          array.push(value);
+
+          //turn the array WITH THE NEW VALUE IN IT into a string to prepare it to be stored in localStorage
+          var stringRepresentingArray = JSON.stringify(array);
+
+          //and store it in localStorage as "itemsline"
+          window.localStorage.setItem("itemsline", stringRepresentingArray);
+      
+          //build history button
+          buildHistory();
+      }
   }     
 }
   //validate the input
@@ -198,6 +204,27 @@ if (cityname) {
   }
 };
 
+function buildHistory(){
+  var stringFromLocalStorage = window.localStorage.getItem("itemsline");
+
+  //Then parse that string into an actual value.
+  var parsedValueFromString = JSON.parse(stringFromLocalStorage);
+
+  $(parsedValueFromString).each(function() {
+    console.log(this);
+    var searchHistory = `<li class="list-group-item upper">${this}</li>`;
+    $("#historyList").append(searchHistory);
+  });
+
+}
+
 userFormEl.addEventListener("submit", formSubmitHandler);
+
+buildHistory();
+
+$(".list-group-item").click(function() {
+  cityname = $(this).text();
+  getWeather(cityname);
+});
 
 
