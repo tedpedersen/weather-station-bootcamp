@@ -8,6 +8,7 @@ html{
 .col-3{
     background-color: #eee;
     height:100vh;
+    padding-top: 20px;
 }
 .card{
     margin-top: 15px;
@@ -74,7 +75,16 @@ li{
   }
 #intro{
     text-align: center;
-    color:#00b4ff;
+    color: dodgerblue;
+}
+nav h3{
+    text-align: center;
+    margin: 0 auto;
+    color: #fff;
+}
+nav{
+    background: dodgerblue;
+    opacity: .8;
 }
   /* KEYFRAMES */
    
