@@ -13,7 +13,7 @@ var getWeather = function(cityname) {
     //refs api
     var now = moment();
     var todaylat = data2.coord.lat;
-    var todaylong = data2.coord.lon;
+    var todaylon = data2.coord.lon;
     var nowis = now.format("MMM, DD, YYYY");
     var city = data2.name;
     var cond = data2.weather[0].description;
@@ -22,11 +22,8 @@ var getWeather = function(cityname) {
     var icon = "http://openweathermap.org/img/w/" + theiconcode + ".png";
     var hum = data2.main.humidity;
     var wind = data2.wind.speed;
-    var uv = "30";
-
-
-    console.log("long: " + todaylong + "lat: " + todaylat);
-
+    var uv = "";
+    //buid the card for today
     var todayCard = `<div class="card animated fadeIn">
       <div class="card-body" id="maincard">
         <h2>${city} <span class="small date">${nowis}</span> <img id="wicon" src="${icon}" alt="Weather icon"> <span class="small upper">${cond}</span></h2>
@@ -39,10 +36,15 @@ var getWeather = function(cityname) {
     <h4>5 Day Forcast for ${city}</h4>`
     $("#main").html("");
     $("#main").append(todayCard);
-    if (uv < 3) {
+    var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+fetch(apiUV).then(function(response) {
+  response.json().then(function(data3) {
+    console.log(data3[0].value);
+    $("#uv").text(data3[0].value)
+    if (data3[0].value < 3) {
       $( "#uv" ).addClass( "badge-success" );
     }
-    else if (uv < 7) {
+    else if (data3[0].value < 7) {
       $( "#uv" ).addClass( "badge-warning" );
 
     }
@@ -50,6 +52,8 @@ var getWeather = function(cityname) {
       $( "#uv" ).addClass( "badge-danger" );
 
     } 
+  });
+});
     });
   });
   //5 day request
@@ -69,8 +73,6 @@ var getWeather = function(cityname) {
       var myDate = data.list[6].dt_txt;
       var thedateis = myDate.substring(0,10);
       var thedate = moment(thedateis).format("MMM, DD, YYYY");
-      var theuv = "";
-
       var thewind1 = data.list[12].wind.speed;
       var thehum1 = data.list[12].main.humidity;
       var thetemp1 = data.list[12].main.temp;
@@ -79,8 +81,6 @@ var getWeather = function(cityname) {
       var iconurl1 = "http://openweathermap.org/img/w/" + iconcode1 + ".png";
       var myDate1 = data.list[12].dt_txt;
       var thedate1 = moment(myDate1).format("MMM, DD, YYYY");
-      var theuv1 = "";
-  ﻿
       var thewind2 = data.list[20].wind.speed;
       var thehum2 = data.list[20].main.humidity;
       var thetemp2 = data.list[20].main.temp;
@@ -89,8 +89,6 @@ var getWeather = function(cityname) {
       var iconurl2 = "http://openweathermap.org/img/w/" + iconcode2 + ".png";
       var myDate2 = data.list[20].dt_txt;
       var thedate2 = moment(myDate2).format("MMM, DD, YYYY");
-      var theuv2 = "";
-
       var thewind3 = data.list[30].wind.speed;
       var thehum3 = data.list[30].main.humidity;
       var thetemp3 = data.list[30].main.temp;
@@ -100,8 +98,6 @@ var getWeather = function(cityname) {
       var myDate3 = data.list[30].dt_txt;
       var thedateis3 = myDate3.substring(0,10);
       var thedate3 = moment(thedateis3).format("MMM, DD, YYYY");
-      var theuv3 = "";
-
       var thewind4 = data.list[36].wind.speed;
       var thehum4 = data.list[36].main.humidity;
       var thetemp4 = data.list[36].main.temp;
@@ -111,7 +107,7 @@ var getWeather = function(cityname) {
       var myDate4 = data.list[36].dt_txt;
       var thedateis4 = myDate4.substring(0,10);
       var thedate4 = moment(thedateis4).format("MMM, DD, YYYY");
-      var theuv4 = "";
+
       // template for 5 day cards  
       var card = `
       <div class="row animated fadeInUp" id="fiveday">
@@ -122,7 +118,6 @@ var getWeather = function(cityname) {
               <p>Temp: <span>${thetemp} F&deg</span></p>
               <p>Humidity: <span>${thehum}%</span></p>
               <p>Wind Speed: <span>${thewind} MPH</span></p>
-              <p>UV Index: <span>${theuv}</span></p>
             </div>
           </div>
         <div class="col card">
@@ -132,7 +127,7 @@ var getWeather = function(cityname) {
               <p>Temp: <span>${thetemp1} F&deg</span></p>
               <p>Humidity: <span>${thehum1}%</span></p>
               <p>Wind Speed: <span>${thewind1} MPH</span></p>
-              <p>UV Index: <span>${theuv1}</span></p>
+           
             </div>
         </div>
         <div class="col card">
@@ -142,7 +137,7 @@ var getWeather = function(cityname) {
               <p>Temp: <span>${thetemp2} F&deg</span></p>
               <p>Humidity: <span>${thehum2}%</span></p>
               <p>Wind Speed: <span>${thewind2} MPH</span></p>
-              <p>UV Index: <span>${theuv2}</span></p>
+          
           </div>
         </div>
         <div class="col card">
@@ -152,7 +147,7 @@ var getWeather = function(cityname) {
               <p>Temp: <span>${thetemp3} F&deg</span></p>
               <p>Humidity: <span>${thehum3}%</span></p>
               <p>Wind Speed: <span>${thewind3} MPH</span></p>
-              <p>UV Index: <span>${theuv3}</span></p>
+           
           </div>
         </div>
         <div class="col card">
@@ -162,7 +157,7 @@ var getWeather = function(cityname) {
             <p>Temp: <span>${thetemp4} F&deg</span></p>
             <p>Humidity: <span>${thehum4}%</span></p>
             <p>Wind Speed: <span>${thewind4} MPH</span></p>
-            <p>UV Index: <span>${theuv4}</span></p>
+           
             </div>
           </div>
         </div>
@@ -262,7 +257,6 @@ $(document).delegate(".list-group-item", 'click', function(){
   cityname = $(this).text();
   getWeather(cityname);
 });
-
 
 
 
