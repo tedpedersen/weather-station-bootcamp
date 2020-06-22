@@ -33,27 +33,28 @@ var getWeather = function(cityname) {
         <p>UV Index: <span class="badge" id="uv">${uv}</span></p>
       </div>
     </div>
-    <h4>5 Day Forcast for ${city}</h4>`
+    <h4>5 Day Forecast for ${city}</h4>`
     $("#main").html("");
     $("#main").append(todayCard);
+    //get the UV data, put in card, and color the badge
     var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
-fetch(apiUV).then(function(response) {
-  response.json().then(function(data3) {
-    console.log(data3[0].value);
-    $("#uv").text(data3[0].value)
-    if (data3[0].value < 3) {
-      $( "#uv" ).addClass( "badge-success" );
-    }
-    else if (data3[0].value < 7) {
-      $( "#uv" ).addClass( "badge-warning" );
+    fetch(apiUV).then(function(response) {
+      response.json().then(function(data3) {
+        console.log(data3[0].value);
+        $("#uv").text(data3[0].value)
+        if (data3[0].value < 3) {
+          $( "#uv" ).addClass( "badge-success" );
+        }
+        else if (data3[0].value < 7) {
+          $( "#uv" ).addClass( "badge-warning" );
 
-    }
-    else {
-      $( "#uv" ).addClass( "badge-danger" );
+        }
+        else {
+          $( "#uv" ).addClass( "badge-danger" );
 
-    } 
-  });
-});
+        } 
+      });
+    });
     });
   });
   //5 day request
@@ -127,8 +128,7 @@ fetch(apiUV).then(function(response) {
               <p>Temp: <span>${thetemp1} F&deg</span></p>
               <p>Humidity: <span>${thehum1}%</span></p>
               <p>Wind Speed: <span>${thewind1} MPH</span></p>
-           
-            </div>
+           </div>
         </div>
         <div class="col card">
           <div class="card-body">
@@ -137,7 +137,6 @@ fetch(apiUV).then(function(response) {
               <p>Temp: <span>${thetemp2} F&deg</span></p>
               <p>Humidity: <span>${thehum2}%</span></p>
               <p>Wind Speed: <span>${thewind2} MPH</span></p>
-          
           </div>
         </div>
         <div class="col card">
@@ -147,7 +146,6 @@ fetch(apiUV).then(function(response) {
               <p>Temp: <span>${thetemp3} F&deg</span></p>
               <p>Humidity: <span>${thehum3}%</span></p>
               <p>Wind Speed: <span>${thewind3} MPH</span></p>
-           
           </div>
         </div>
         <div class="col card">
@@ -157,8 +155,7 @@ fetch(apiUV).then(function(response) {
             <p>Temp: <span>${thetemp4} F&deg</span></p>
             <p>Humidity: <span>${thehum4}%</span></p>
             <p>Wind Speed: <span>${thewind4} MPH</span></p>
-           
-            </div>
+           </div>
           </div>
         </div>
       </div>
@@ -250,9 +247,7 @@ function addToStorage(cityname) {
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 buildHistory();
-
-
-
+//history list click event
 $(document).delegate(".list-group-item", 'click', function(){
   cityname = $(this).text();
   getWeather(cityname);
