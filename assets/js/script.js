@@ -40,7 +40,7 @@ var getWeather = function(cityname) {
     var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
     fetch(apiUV).then(function(response) {
       response.json().then(function(data3) {
-        console.log(data3[0].value);
+        // console.log(data3[0].value);
         $("#uv").text(data3[0].value)
         if (data3[0].value < 3) {
           $( "#uv" ).addClass( "badge-success" );
@@ -61,7 +61,7 @@ var getWeather = function(cityname) {
   fetch(apiUrl).then(function(response) {
     response.json().then(function(data) {
       if(cityname){
-      console.log(data);
+      // console.log(data);
       // clear the input
       nameInputEl.value = "";
       // refs to api
@@ -210,7 +210,7 @@ function buildHistory(cityname){
   var parsedValueFromString = JSON.parse(stringFromLocalStorage);
   $("#historyList").html("");
   $(parsedValueFromString).each(function() {
-    console.log(this);
+    // console.log(this);
     var searchHistory = `<li class="list-group-item upper">${this}</li>`;
     $("#historyList").prepend(searchHistory);
   });

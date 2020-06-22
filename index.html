@@ -19,52 +19,56 @@
 <div class="container-fluid">
     <div class="row">
         <aside class="col-3">
-                <h5>Search for a City:</h5>
-                <form class="form-inline" id="searchForm">
-                    <label class="sr-only" for="searchInput" >Name</label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" id="searchInput" placeholder="Enter a city name">
-                    <button type="submit" class="btn btn-primary mb-2" id="searchBtn"><i class="fa fa-search"></i></button>
-                </form>
-                <div class="card" style="width: 18rem;">
-                    <ul class="list-group list-group-flush" id="historyList">
-                    </ul>
+            <!-- search bar -->
+            <h5>Search for a City:</h5>
+            <form class="form-inline" id="searchForm">
+                <label class="sr-only" for="searchInput" >Name</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="searchInput" placeholder="Enter a city name">
+                <button type="submit" class="btn btn-primary mb-2" id="searchBtn"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="card" style="width: 18rem;">
+                <!-- history list -->
+                <ul class="list-group list-group-flush" id="historyList">
+                </ul>
+            </div>
+        </aside>
+        <section class="col-9">
+            <!-- animated cloud bg  -->
+            <div id="background-wrap">
+                <div class="x1">
+                    <div class="cloud"></div>
                 </div>
-            </aside>
-            <section class="col-9">
-                <!-- animated cloud bg  -->
-                <div id="background-wrap">
-                    <div class="x1">
-                        <div class="cloud"></div>
-                    </div>
-                
-                    <div class="x2">
-                        <div class="cloud"></div>
-                    </div>
-                
-                    <div class="x3">
-                        <div class="cloud"></div>
-                    </div>
-                
-                    <div class="x4">
-                        <div class="cloud"></div>
-                    </div>
-                
-                    <div class="x5">
-                        <div class="cloud"></div>
+            
+                <div class="x2">
+                    <div class="cloud"></div>
+                </div>
+            
+                <div class="x3">
+                    <div class="cloud"></div>
+                </div>
+            
+                <div class="x4">
+                    <div class="cloud"></div>
+                </div>
+            
+                <div class="x5">
+                    <div class="cloud"></div>
+                </div>
+            </div>
+            <div id="main">
+                <!-- intro, todays card replaces when user searches -->
+                <div class="card animated fadeInUp" id="intro">
+                    <div class="card-body">
+                        <h1>Welcome to the Weather Dashboard!</h1>
+                        <p>Get started by searching for a city by name. Your searches will be saved in a clickable list.</p>
                     </div>
                 </div>
-                <div id="main">
-                    <div class="card animated fadeInUp" id="intro">
-                        <div class="card-body">
-                            <h1>Welcome to the Weather Dashboard!</h1>
-                            <p>Get started by searching for a city by name. Your searches will be saved in a clickable list.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid" id="five">
+            </div>
+            <div class="container-fluid" id="five">
+            <!-- 5 day forecast -->
 
-                </div>
-           </section>
+            </div>
+        </section>
     </div>
 </div>
 
