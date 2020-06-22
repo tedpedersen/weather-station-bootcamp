@@ -251,16 +251,19 @@ function addToStorage(cityname) {
       checkCity(cityname);
   }
 };
+
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 buildHistory();
 
-$(".list-group-item").click(function() {
+
+
+$(document).delegate(".list-group-item", 'click', function(){
   cityname = $(this).text();
   getWeather(cityname);
 });
 
 
-var myDate = new Date(1498132800);
-console.log(myDate);
+
+
 
