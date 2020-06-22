@@ -3,8 +3,9 @@ var nameInputEl = document.querySelector("#searchInput");
 
 var getWeather = function(cityname) {
   // format the api url: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&exclude=minutely,hourly&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
   var apiUrlToday = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+  
 
   // today's requests
   fetch(apiUrlToday).then(function(response) {
@@ -36,6 +37,12 @@ var getWeather = function(cityname) {
     <h4>5 Day Forecast for ${city}</h4>`
     $("#main").html("");
     $("#main").append(todayCard);
+    // var apiUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + todaylat + "&lon=" +todaylon + "&exclude=minutely,hourly&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+    // fetch(apiUrl2).then(function(response) {
+    //   response.json().then(function(data4) {
+    //     // console.log(data4);
+    //   });
+    // });
     //get the UV data, put in card, and color the badge
     var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
     fetch(apiUV).then(function(response) {
@@ -74,21 +81,21 @@ var getWeather = function(cityname) {
       var myDate = data.list[6].dt_txt;
       var thedateis = myDate.substring(0,10);
       var thedate = moment(thedateis).format("MMM, DD, YYYY");
-      var thewind1 = data.list[12].wind.speed;
-      var thehum1 = data.list[12].main.humidity;
-      var thetemp1 = data.list[12].main.temp;
-      var thecond1 = data.list[12].weather[0].description;
-      var iconcode1 = data.list[12].weather[0].icon;
+      var thewind1 = data.list[15].wind.speed;
+      var thehum1 = data.list[15].main.humidity;
+      var thetemp1 = data.list[15].main.temp;
+      var thecond1 = data.list[15].weather[0].description;
+      var iconcode1 = data.list[15].weather[0].icon;
       var iconurl1 = "http://openweathermap.org/img/w/" + iconcode1 + ".png";
-      var myDate1 = data.list[12].dt_txt;
+      var myDate1 = data.list[15].dt_txt;
       var thedate1 = moment(myDate1).format("MMM, DD, YYYY");
-      var thewind2 = data.list[20].wind.speed;
-      var thehum2 = data.list[20].main.humidity;
-      var thetemp2 = data.list[20].main.temp;
-      var thecond2 = data.list[20].weather[0].description;
-      var iconcode2 = data.list[20].weather[0].icon;
+      var thewind2 = data.list[24].wind.speed;
+      var thehum2 = data.list[24].main.humidity;
+      var thetemp2 = data.list[24].main.temp;
+      var thecond2 = data.list[24].weather[0].description;
+      var iconcode2 = data.list[24].weather[0].icon;
       var iconurl2 = "http://openweathermap.org/img/w/" + iconcode2 + ".png";
-      var myDate2 = data.list[20].dt_txt;
+      var myDate2 = data.list[24].dt_txt;
       var thedate2 = moment(myDate2).format("MMM, DD, YYYY");
       var thewind3 = data.list[30].wind.speed;
       var thehum3 = data.list[30].main.humidity;
@@ -99,13 +106,13 @@ var getWeather = function(cityname) {
       var myDate3 = data.list[30].dt_txt;
       var thedateis3 = myDate3.substring(0,10);
       var thedate3 = moment(thedateis3).format("MMM, DD, YYYY");
-      var thewind4 = data.list[36].wind.speed;
-      var thehum4 = data.list[36].main.humidity;
-      var thetemp4 = data.list[36].main.temp;
-      var thecond4 = data.list[36].weather[0].description;
-      var iconcode4 = data.list[36].weather[0].icon;
+      var thewind4 = data.list[39].wind.speed;
+      var thehum4 = data.list[39].main.humidity;
+      var thetemp4 = data.list[39].main.temp;
+      var thecond4 = data.list[39].weather[0].description;
+      var iconcode4 = data.list[39].weather[0].icon;
       var iconurl4 = "http://openweathermap.org/img/w/" + iconcode4 + ".png";
-      var myDate4 = data.list[36].dt_txt;
+      var myDate4 = data.list[39].dt_txt;
       var thedateis4 = myDate4.substring(0,10);
       var thedate4 = moment(thedateis4).format("MMM, DD, YYYY");
 
@@ -253,6 +260,10 @@ $(document).delegate(".list-group-item", 'click', function(){
   getWeather(cityname);
 });
 
+// var timestamp = 1592811925;
+// var addedMilli = new Date(timestamp * 1000); 
+// var theDate = new Date(addedMilli);
+// alert(theDate);
 
 
 
