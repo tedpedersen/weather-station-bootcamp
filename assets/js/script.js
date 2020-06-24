@@ -3,26 +3,23 @@ var nameInputEl = document.querySelector("#searchInput");
 
 var getWeather = function(cityname) {
   // format the api url: api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&exclude=minutely,hourly&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
   var apiUrlToday = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
-  
 
   // today's requests
   fetch(apiUrlToday).then(function(response) {
-  response.json().then(function(data2) {
-    // console.log(data2);
+  response.json().then(function(today) {
     //refs api
     var now = moment();
-    var todaylat = data2.coord.lat;
-    var todaylon = data2.coord.lon;
+    var todaylat = today.coord.lat;
+    var todaylon = today.coord.lon;
     var nowis = now.format("MMM, DD, YYYY");
-    var city = data2.name;
-    var cond = data2.weather[0].description;
-    var temp = data2.main.temp;
-    var theiconcode = data2.weather[0].icon;
+    var city = today.name;
+    var cond = today.weather[0].description;
+    var temp = today.main.temp;
+    var theiconcode = today.weather[0].icon;
     var icon = "http://openweathermap.org/img/w/" + theiconcode + ".png";
-    var hum = data2.main.humidity;
-    var wind = data2.wind.speed;
+    var hum = today.main.humidity;
+    var wind = today.wind.speed;
     var uv = "";
     //buid the card for today
     var todayCard = `<div class="card animated fadeIn">
@@ -37,84 +34,62 @@ var getWeather = function(cityname) {
     <h4>5 Day Forecast for ${city}</h4>`
     $("#main").html("");
     $("#main").append(todayCard);
-    // var apiUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + todaylat + "&lon=" +todaylon + "&exclude=minutely,hourly&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
-    // fetch(apiUrl2).then(function(response) {
-    //   response.json().then(function(data4) {
-    //     // console.log(data4);
-    //   });
-    // });
-    //get the UV data, put in card, and color the badge
-    var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
-    fetch(apiUV).then(function(response) {
-      response.json().then(function(data3) {
-        // console.log(data3[0].value);
-        $("#uv").text(data3[0].value)
-        if (data3[0].value < 3) {
-          $( "#uv" ).addClass( "badge-success" );
-        }
-        else if (data3[0].value < 7) {
-          $( "#uv" ).addClass( "badge-warning" );
-
-        }
-        else {
-          $( "#uv" ).addClass( "badge-danger" );
-
-        } 
-      });
-    });
-    });
-  });
-  //5 day request
-  fetch(apiUrl).then(function(response) {
-    response.json().then(function(data) {
+  
+    //5 day request
+  var apiUrl2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + todaylat + "&lon=" +todaylon + "&exclude=minutely,hourly&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+  fetch(apiUrl2).then(function(response) {
+    response.json().then(function(forecast) {
       if(cityname){
-      // console.log(data);
       // clear the input
       nameInputEl.value = "";
       // refs to api
-      var thewind = data.list[6].wind.speed;
-      var thehum = data.list[6].main.humidity;
-      var thetemp = data.list[6].main.temp;
-      var thecond = data.list[6].weather[0].description;
-      var iconcode = data.list[6].weather[0].icon;
+      var thewind = forecast.daily[1].wind_speed;
+      var thehum = forecast.daily[1].humidity;
+      var thetemp = forecast.daily[1].temp.max;
+      var thecond = forecast.daily[1].weather[0].description;
+      var iconcode = forecast.daily[1].weather[0].icon
       var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-      var myDate = data.list[6].dt_txt;
-      var thedateis = myDate.substring(0,10);
-      var thedate = moment(thedateis).format("MMM, DD, YYYY");
-      var thewind1 = data.list[15].wind.speed;
-      var thehum1 = data.list[15].main.humidity;
-      var thetemp1 = data.list[15].main.temp;
-      var thecond1 = data.list[15].weather[0].description;
-      var iconcode1 = data.list[15].weather[0].icon;
+      //date gives back unix time stamp, so convert to human readable
+      var thedateis = new Date(forecast.daily[1].dt * 1000);
+      var mdate = moment(thedateis);
+      var thedate = mdate.format("MMM, DD, YYYY");
+      var thewind1 = forecast.daily[2].wind_speed;
+      var thehum1 = forecast.daily[2].humidity;
+      var thetemp1 = forecast.daily[2].temp.max;
+      var thecond1 = forecast.daily[2].weather[0].description;
+      var iconcode1 = forecast.daily[2].weather[0].icon;
       var iconurl1 = "http://openweathermap.org/img/w/" + iconcode1 + ".png";
-      var myDate1 = data.list[15].dt_txt;
-      var thedate1 = moment(myDate1).format("MMM, DD, YYYY");
-      var thewind2 = data.list[24].wind.speed;
-      var thehum2 = data.list[24].main.humidity;
-      var thetemp2 = data.list[24].main.temp;
-      var thecond2 = data.list[24].weather[0].description;
-      var iconcode2 = data.list[24].weather[0].icon;
+      var thedateis1 = new Date(forecast.daily[2].dt * 1000);
+      var mdate1 = moment(thedateis1);
+      var thedate1 = mdate1.format("MMM, DD, YYYY");
+      var thewind2 = forecast.daily[3].wind_speed;
+      var thehum2 = forecast.daily[3].humidity;
+      var thetemp2 = forecast.daily[3].temp.max;
+      var thecond2 = forecast.daily[3].weather[0].description;
+      var iconcode2 = forecast.daily[3].weather[0].icon
       var iconurl2 = "http://openweathermap.org/img/w/" + iconcode2 + ".png";
-      var myDate2 = data.list[24].dt_txt;
-      var thedate2 = moment(myDate2).format("MMM, DD, YYYY");
-      var thewind3 = data.list[30].wind.speed;
-      var thehum3 = data.list[30].main.humidity;
-      var thetemp3 = data.list[30].main.temp;
-      var thecond3 = data.list[30].weather[0].description;
-      var iconcode3 = data.list[30].weather[0].icon;
+      var thedateis2 = new Date(forecast.daily[3].dt * 1000);
+      var mdate2 = moment(thedateis2);
+      var thedate2 = mdate2.format("MMM, DD, YYYY");
+      var thewind3 = forecast.daily[4].wind_speed;
+      var thehum3 = forecast.daily[4].humidity;
+      var thetemp3 = forecast.daily[4].temp.max;
+      var thecond3 = forecast.daily[4].weather[0].description;
+      var iconcode3 = forecast.daily[4].weather[0].icon
       var iconurl3 = "http://openweathermap.org/img/w/" + iconcode3 + ".png";
-      var myDate3 = data.list[30].dt_txt;
-      var thedateis3 = myDate3.substring(0,10);
-      var thedate3 = moment(thedateis3).format("MMM, DD, YYYY");
-      var thewind4 = data.list[39].wind.speed;
-      var thehum4 = data.list[39].main.humidity;
-      var thetemp4 = data.list[39].main.temp;
-      var thecond4 = data.list[39].weather[0].description;
-      var iconcode4 = data.list[39].weather[0].icon;
+      var thedateis3 = new Date(forecast.daily[4].dt * 1000);
+      var mdate3 = moment(thedateis3);
+      var thedate3 = mdate3.format("MMM, DD, YYYY");
+      var thewind4 = forecast.daily[5].wind_speed;
+      var thehum4 = forecast.daily[5].humidity;
+      var thetemp4 = forecast.daily[5].temp.max;
+      var thecond4 = forecast.daily[5].weather[0].description;
+      var iconcode4 = forecast.daily[5].weather[0].icon
       var iconurl4 = "http://openweathermap.org/img/w/" + iconcode4 + ".png";
-      var myDate4 = data.list[39].dt_txt;
-      var thedateis4 = myDate4.substring(0,10);
-      var thedate4 = moment(thedateis4).format("MMM, DD, YYYY");
+      var thedateis4 = new Date(forecast.daily[5].dt * 1000);
+      var mdate4 = moment(thedateis4);
+      var thedate4 = mdate4.format("MMM, DD, YYYY");
+   
 
       // template for 5 day cards  
       var card = `
@@ -173,8 +148,30 @@ var getWeather = function(cityname) {
       }
     });
   });
-};
 
+    //get the UV data, put in card, and color the badge
+    var apiUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + todaylat + "&lon=" +todaylon + "&units=imperial&appid=fabf22bfb54443507c45e344ea64f584";
+    fetch(apiUV).then(function(response) {
+      response.json().then(function(data3) {
+        // console.log(data3[0].value);
+        $("#uv").text(data3[0].value)
+        if (data3[0].value < 3) {
+          $( "#uv" ).addClass( "badge-success" );
+        }
+        else if (data3[0].value < 7) {
+          $( "#uv" ).addClass( "badge-warning" );
+
+        }
+        else {
+          $( "#uv" ).addClass( "badge-danger" );
+
+        } 
+      });
+    });
+    });
+  });
+  
+};
 
 var formSubmitHandler = function(event) {
 event.preventDefault();
@@ -260,10 +257,7 @@ $(document).delegate(".list-group-item", 'click', function(){
   getWeather(cityname);
 });
 
-// var timestamp = 1592811925;
-// var addedMilli = new Date(timestamp * 1000); 
-// var theDate = new Date(addedMilli);
-// alert(theDate);
+
 
 
 
