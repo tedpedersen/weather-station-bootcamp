@@ -24,14 +24,14 @@ var getWeather = function(cityname) {
     //buid the card for today
     var todayCard = `<div class="card animated fadeIn">
       <div class="card-body" id="maincard">
-        <h2>${city} <span class="small date">${nowis}</span> <img id="wicon" src="${icon}" alt="Weather icon"> <span class="small upper">${cond}</span></h2>
+        <h2 class="upper">${city} <span class="small date">${nowis}</span> <img id="wicon" src="${icon}" alt="Weather icon"> <span class="small upper">${cond}</span></h2>
         <p>Temp: <span>${temp}</span> F&deg;</p>
         <p>Humidity: <span>${hum}</span>%</p>
         <p>Wind Speed: <span>${wind}</span> MPH</p>
         <p>UV Index: <span class="badge" id="uv">${uv}</span></p>
       </div>
     </div>
-    <h4>5 Day Forecast for ${city}</h4>`
+    <h4>5 Day Forecast for <span class="upper">${city}</span></h4>`
     $("#main").html("");
     $("#main").append(todayCard);
   
