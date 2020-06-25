@@ -265,8 +265,11 @@ function mobileView(){
     $( "section" ).removeClass( "col-9" );
     $( ".form-control" ).css( "width", "80%" );
     $( "aside" ).css( "background-color", "#eee" );  
-    $( "aside" ).css( "padding", "15px 15px" );   
+    $( "aside" ).css( "padding", "15px 15px" );
+    $( ".card" ).removeClass( "col" );     
 } else {
+    $( ".form-control" ).css( "width", "70%" );
+    $( ".card" ).addClass( "col" );
     $( "aside" ).removeClass( "col-12" );
     $( "aside" ).addClass( "col-3" );
     $( "section" ).removeClass( "col-12" );
