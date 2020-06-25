@@ -144,7 +144,8 @@ var getWeather = function(cityname) {
       `;
     $("#five").html("");
     $("#five").append(card);
-  
+    //change the layout if mobile
+    mobileView();
       }
     });
   });
