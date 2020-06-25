@@ -272,7 +272,7 @@ function mobileView(){
     $( ".card" ).addClass( "col-12" );      
 } else {
     $( ".form-control" ).css( "width", "70%" );
-    $( ".card" ).addClass( "col" );
+    $( "#fiveday .card" ).addClass( "col" );
     $( ".card" ).removeClass( "col-12" );
     $( "aside" ).removeClass( "col-12" );
     $( "aside" ).addClass( "col-3" );
