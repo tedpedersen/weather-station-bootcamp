@@ -263,25 +263,28 @@ function mobileView(){
     $( "aside" ).removeClass( "col-3" );
     $( "aside" ).addClass( "col-12" );
     $( "section" ).removeClass( "col-9" );
+    $( "section" ).addClass( "col-12" );
     $( ".form-control" ).css( "width", "80%" );
     $( "aside" ).css( "background-color", "#eee" );  
     $( "aside" ).css( "padding", "15px 15px" );
-    $( ".card" ).removeClass( "col" );     
+    $( ".card" ).removeClass( "col" );
+    $( ".card" ).addClass( "col-12" );      
 } else {
     $( ".form-control" ).css( "width", "70%" );
     $( ".card" ).addClass( "col" );
+    $( ".card" ).removeClass( "col-12" );
     $( "aside" ).removeClass( "col-12" );
     $( "aside" ).addClass( "col-3" );
     $( "section" ).removeClass( "col-12" );
     $( "section" ).addClass( "col-9" );
   }
-}
-
-mobileView();
+};
 
 $(window).resize(function() {
   mobileView();
 });
+
+mobileView();
 
 
 
