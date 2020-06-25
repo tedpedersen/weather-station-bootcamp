@@ -251,4 +251,7 @@ nav{
     #main{
         padding-bottom: 20px;
     }
+    #maincard h2.upper span{
+        display:block;
+    }
   }
