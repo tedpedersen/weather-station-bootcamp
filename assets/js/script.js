@@ -270,7 +270,6 @@ function mobileView(){
     $( "section" ).addClass( "col-12" );
     $( ".form-control" ).css( "width", "80%" );
     $( "aside" ).css( "background-color", "#eee" );  
-    $( "aside" ).css( "padding", "15px 15px" );
     $( ".card" ).removeClass( "col" );
     $( ".card" ).addClass( "col-12" );      
 } else {
