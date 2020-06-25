@@ -257,7 +257,28 @@ $(document).delegate(".list-group-item", 'click', function(){
   getWeather(cityname);
 });
 
+//adjust the view for smaller viewports
+function mobileView(){
+  if (window.innerWidth < 960) {
+    $( "aside" ).removeClass( "col-3" );
+    $( "aside" ).addClass( "col-12" );
+    $( "section" ).removeClass( "col-9" );
+    $( ".form-control" ).css( "width", "80%" );
+    $( "aside" ).css( "background-color", "#eee" );  
+    $( "aside" ).css( "padding", "15px 15px" );   
+} else {
+    $( "aside" ).removeClass( "col-12" );
+    $( "aside" ).addClass( "col-3" );
+    $( "section" ).removeClass( "col-12" );
+    $( "section" ).addClass( "col-9" );
+  }
+}
 
+mobileView();
+
+$(window).resize(function() {
+  mobileView();
+});
 
 
 
