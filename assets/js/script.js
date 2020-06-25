@@ -7,6 +7,9 @@ var getWeather = function(cityname) {
 
   // today's requests
   fetch(apiUrlToday).then(function(response) {
+  var loader = `<h2 class="animated infinite pulse loader">Loading...</h2>`;
+  $("#main").append(loader);
+
   response.json().then(function(today) {
     //refs api
     var now = moment();

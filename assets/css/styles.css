@@ -40,6 +40,12 @@ h2{
     color:#000;
     text-shadow: 1px 1px 1px #ccc;
 }
+h2.loader{
+    color: #fff;
+}
+#main img{
+    max-width: 100px;
+}
 h4{
     margin: 15px 0 0 0;
     color: #fff;
@@ -242,5 +248,7 @@ nav{
     #fiveday .upper{
         font-size: .7em;
     }
-   
+    #main{
+        padding-bottom: 20px;
+    }
   }
